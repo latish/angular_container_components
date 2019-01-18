@@ -1,40 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Hero }         from '../hero';
-import { HeroService }  from '../hero.service';
 
 @Component({
-  selector: 'app-hero-detail',
+  selector: 'app-hero-detail-ui',
   templateUrl: './hero-detail.component.html',
   styleUrls: [ './hero-detail.component.css' ]
 })
-export class HeroDetailComponent implements OnInit {
+export class HeroDetailComponent {
   @Input() hero: Hero;
+  @Output() goBack= new EventEmitter();
+  @Output() save= new EventEmitter<Hero>();
 
-  constructor(
-    private route: ActivatedRoute,
-    private heroService: HeroService,
-    private location: Location
-  ) {}
-
-  ngOnInit(): void {
-    this.getHero();
+  goBackClicked(): void {
+    this.goBack.emit();
   }
 
-  getHero(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero);
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
- save(): void {
-    this.heroService.updateHero(this.hero)
-      .subscribe(() => this.goBack());
+ saveClicked(): void {
+   this.save.emit(this.hero);
   }
 }
