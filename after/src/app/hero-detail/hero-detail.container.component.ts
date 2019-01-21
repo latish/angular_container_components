@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.container.component.html',
-  styleUrls: [ ]
+  styleUrls: [ ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeroDetailContainerComponent {
   hero$: Observable<Hero>;
